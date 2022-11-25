@@ -5,7 +5,7 @@ import "../shared.css";
 
 const Header = () => {
   return (
-    <div className="bg-gray-100 shadow-xl">
+    <div className="bg-gray-100 shadow-lg">
       <div className=" flex flex-col lg:px-10 py-5">
         <div className="lg:flex lg:flex-row lg:justify-between hidden lg:px-5">
           <div className="flex lg:justify-start justify-center">
@@ -22,31 +22,52 @@ const Header = () => {
             </Link>
           </div>
         </div>
-        <hr className="lg:block hidden border-1 bg-slate-400 mx-5 my-2" />
-        <div className="navbar bg-base-100 lg:px-5">
+        <hr className="lg:block hidden border-1 bg-slate-400 mx-5 -mt-4 mb-3" />
+        <div className="navbar bg-base-100 lg:px-5 rounded-lg">
           <div className="navbar-start">
-            <ul className="menu menu-horizontal p-0 lg:flex hidden">
+            <ul className="menu menu-horizontal p-0 lg:flex hidden ">
               <li>
                 <Link
                   to="/"
-                  className="text-lg font-medium uppercase hover:text-pink-800"
+                  className="text-lg font-medium uppercase hover:text-blue-800 rounded-md"
                 >
                   Home
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/services"
-                  className="text-lg font-medium uppercase hover:text-pink-800"
-                >
-                  Services
+              <li tabIndex={0}>
+                <Link className="text-lg font-medium uppercase hover:text-blue-800 rounded-md">
+                  Categories
+                  <svg
+                    className="fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+                  </svg>
                 </Link>
+                <ul className="p-2 w-full bg-base-100 rounded-lg">
+                  <li>
+                    <Link className="text-md font-medium uppercase hover:text-blue-800 rounded-md">
+                      Apple
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="text-md font-medium uppercase hover:text-blue-800 rounded-md">
+                      Hp
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="text-md font-medium uppercase hover:text-blue-800 rounded-md">
+                      Dell
+                    </Link>
+                  </li>
+                </ul>
               </li>
+
               <li>
-                <Link
-                  to="/blog"
-                  className="text-lg font-medium uppercase hover:text-pink-800"
-                >
+                <Link className="text-lg font-medium uppercase hover:text-blue-800 rounded-md">
                   Blog
                 </Link>
               </li>
@@ -80,15 +101,37 @@ const Header = () => {
                     Home
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    to="services"
-                    className="text-base font-medium uppercase hover:text-pink-800"
-                  >
-                    Services
+                <li tabIndex={0}>
+                  <Link className="text-lg font-medium uppercase hover:text-blue-800 rounded-md">
+                    Categories
+                    <svg
+                      className="fill-current"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+                    </svg>
                   </Link>
+                  <ul className="p-2 w-full bg-base-100 rounded-lg">
+                    <li>
+                      <Link className="text-md font-medium uppercase hover:text-blue-800 rounded-md">
+                        Apple
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="text-md font-medium uppercase hover:text-blue-800 rounded-md">
+                        Hp
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="text-md font-medium uppercase hover:text-blue-800 rounded-md">
+                        Dell
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
-
                 <li>
                   <Link
                     to="/blog"
@@ -97,19 +140,33 @@ const Header = () => {
                     Blog
                   </Link>
                 </li>
-                <li></li>
+                <li>
+                  <Link className="btn btn-primary bg-transparent rounded-lg hover:text-white">
+                    Log in
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
           <div className="navbar-center flex lg:hidden pr-5">
-            <img className="w-12 h-12 mt-[-5px]" src="" alt="" />
-            <Link to="/" className="custom-font text-2xl text-[#9a063e]">
-              GlamourUS Makeover
+            <img className="w-16 h-16 -ml-5" src={logo} alt="" />
+            <Link
+              to="/"
+              className="font-syncopate font-semibold text-xl text-primary  "
+            >
+              Laptop Trades
             </Link>
           </div>
           <div className="navbar-end hidden lg:flex">
             <ul className="menu menu-horizontal p-0">
-              <li></li>
+              <li>
+                <Link
+                  to="/login"
+                  className="btn btn-primary hidden lg:flex mr-2 bg-transparent rounded-lg hover:text-white"
+                >
+                  Log in
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
