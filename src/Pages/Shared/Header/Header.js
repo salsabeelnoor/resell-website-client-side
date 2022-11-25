@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/laptop_logo_1.png";
-import "../shared.css";
 
 const Header = () => {
   return (
