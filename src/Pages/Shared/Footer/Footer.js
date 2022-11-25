@@ -10,7 +10,7 @@ const Footer = () => {
           <p>Providing reliable tech since 1992</p>
         </div>
 
-        <div className="flex flex-col items-center mb-10">
+        <div className="flex flex-col items-center my-10">
           <Link className="text-base font-medium hover:text-pink-100">
             Home
           </Link>

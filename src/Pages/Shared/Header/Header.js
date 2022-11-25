@@ -67,6 +67,11 @@ const Header = () => {
 
               <li>
                 <Link className="text-lg font-medium uppercase hover:text-blue-800 rounded-md">
+                  Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link className="text-lg font-medium uppercase hover:text-blue-800 rounded-md">
                   Blog
                 </Link>
               </li>
@@ -133,7 +138,15 @@ const Header = () => {
                 </li>
                 <li>
                   <Link
-                    to="/blog"
+                    to=""
+                    className="text-base font-medium uppercase hover:text-pink-800"
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to=""
                     className="text-base font-medium uppercase hover:text-pink-800"
                   >
                     Blog
