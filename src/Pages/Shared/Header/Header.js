@@ -156,7 +156,10 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link className="btn btn-primary bg-transparent rounded-lg hover:text-white">
+                  <Link
+                    to="/login"
+                    className="btn btn-primary bg-transparent rounded-lg hover:text-white"
+                  >
                     Log in
                   </Link>
                 </li>
