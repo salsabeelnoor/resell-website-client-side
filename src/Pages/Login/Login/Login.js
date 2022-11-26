@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import login from "../../../assets/login/login2.jpg";
 import { FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
@@ -8,6 +8,7 @@ import { GoogleAuthProvider } from "firebase/auth";
 const Login = () => {
   const { signIn, providerLogin } = useContext(AuthContext);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   //google Sign in
   const googleProvider = new GoogleAuthProvider();
@@ -16,6 +17,24 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         console.log(user);
+        const customers = {
+          name: user.displayName,
+          email: user.email,
+          customerState: "buyer",
+        };
+        //send customer info to database
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(customers),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          })
+          .catch((error) => console.error(error));
       })
       .catch((error) => {
         console.error(error);
@@ -32,10 +51,8 @@ const Login = () => {
     signIn(email, password)
       .then((result) => {
         const user = result.user;
-        const currentUser = {
-          uid: user.uid,
-        };
         console.log(user);
+        navigate("/dashboard");
         form.reset();
         setError("");
       })

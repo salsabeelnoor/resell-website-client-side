@@ -6,6 +6,7 @@ import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 const SignUp = () => {
   const [error, setError] = useState("");
   const { createUser, updateUserProfile } = useContext(AuthContext);
+  const [radioSelected, setRadioSelected] = useState("buyer");
 
   const handleSignUp = (event) => {
     event.preventDefault();
@@ -14,7 +15,14 @@ const SignUp = () => {
     const photoURL = form.photoURL.value;
     const email = form.email.value;
     const password = form.password.value;
+    const customerState = radioSelected;
+    console.log("radiobtn", radioSelected);
 
+    const customers = {
+      name,
+      email,
+      customerState,
+    };
     createUser(email, password)
       .then((result) => {
         const user = result.user;
@@ -27,6 +35,19 @@ const SignUp = () => {
         console.error(err);
         setError(err.message);
       });
+
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(customers),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => console.error(error));
   };
 
   const handleUpdateUserProfile = (name, photoURL) => {
@@ -37,6 +58,11 @@ const SignUp = () => {
     updateUserProfile(profile)
       .then(() => {})
       .catch((error) => console.error(error));
+  };
+
+  const handleRadioBtnChange = (event) => {
+    setRadioSelected(event.target.value);
+    return radioSelected;
   };
 
   return (
@@ -59,8 +85,10 @@ const SignUp = () => {
                   <input
                     type="radio"
                     name="radio-10"
+                    value="buyer"
                     className="radio checked:bg-red-500"
-                    checked
+                    checked={radioSelected === "buyer"}
+                    onChange={handleRadioBtnChange}
                   />
                 </label>
               </div>
@@ -72,8 +100,10 @@ const SignUp = () => {
                   <input
                     type="radio"
                     name="radio-10"
+                    value="seller"
                     className="radio checked:bg-blue-500"
-                    checked
+                    checked={radioSelected === "seller"}
+                    onChange={handleRadioBtnChange}
                   />
                 </label>
               </div>
