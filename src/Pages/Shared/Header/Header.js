@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/laptop_logo_1.png";
+import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 
 const Header = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => console.error(error));
+  };
+
   return (
     <div className="bg-gray-100 shadow-lg">
       <div className=" flex flex-col lg:px-10 py-5">
@@ -66,12 +75,18 @@ const Header = () => {
               </li>
 
               <li>
-                <Link
-                  to="/dashboard"
-                  className="text-lg font-medium uppercase hover:text-blue-800 rounded-md"
-                >
-                  Dashboard
-                </Link>
+                {user?.uid ? (
+                  <>
+                    <Link
+                      to="/dashboard"
+                      className="text-lg font-medium uppercase hover:text-blue-800 rounded-md"
+                    >
+                      Dashboard
+                    </Link>
+                  </>
+                ) : (
+                  ""
+                )}
               </li>
               <li>
                 <Link className="text-lg font-medium uppercase hover:text-blue-800 rounded-md">
@@ -140,12 +155,18 @@ const Header = () => {
                   </ul>
                 </li>
                 <li>
-                  <Link
-                    to="/dashboard"
-                    className="text-base font-medium uppercase hover:text-pink-800"
-                  >
-                    Dashboard
-                  </Link>
+                  {user?.uid ? (
+                    <>
+                      <Link
+                        to="/dashboard"
+                        className="text-lg font-medium uppercase hover:text-blue-800 rounded-md"
+                      >
+                        Dashboard
+                      </Link>
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </li>
                 <li>
                   <Link
@@ -156,12 +177,25 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to="/login"
-                    className="btn btn-primary bg-transparent rounded-lg hover:text-white"
-                  >
-                    Log in
-                  </Link>
+                  {user?.uid ? (
+                    <>
+                      <Link
+                        onClick={handleLogOut}
+                        className="btn btn-primary bg-transparent rounded-lg hover:text-white"
+                      >
+                        Logout
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        to="/login"
+                        className="btn btn-primary bg-transparent rounded-lg hover:text-white"
+                      >
+                        Log in
+                      </Link>
+                    </>
+                  )}
                 </li>
               </ul>
             </div>
@@ -178,12 +212,28 @@ const Header = () => {
           <div className="navbar-end hidden lg:flex">
             <ul className="menu menu-horizontal p-0">
               <li>
-                <Link
-                  to="/login"
-                  className="btn btn-primary hidden lg:flex mr-2 bg-transparent rounded-lg hover:text-white"
-                >
-                  Log in
-                </Link>
+                {user?.uid ? (
+                  <>
+                    <span className="text-lg font-medium">
+                      {user?.displayName}
+                    </span>
+                    <Link
+                      onClick={handleLogOut}
+                      className="btn btn-primary hidden lg:flex mr-2 bg-transparent rounded-lg hover:text-white"
+                    >
+                      Logout
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      to="/login"
+                      className="btn btn-primary hidden lg:flex mr-2 bg-transparent rounded-lg hover:text-white"
+                    >
+                      Log in
+                    </Link>
+                  </>
+                )}
               </li>
             </ul>
           </div>

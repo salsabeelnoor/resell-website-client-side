@@ -8,6 +8,10 @@ module.exports = {
         satisfy: ["'Satisfy'", "cursive"],
         syncopate: ["'Syncopate'", "sans-serif"],
       },
+      gridTemplateColumns: {
+        layout: "4fr 1fr",
+        mobile_layout: "1fr",
+      },
     },
   },
   plugins: [require("daisyui")],

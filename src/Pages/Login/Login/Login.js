@@ -1,21 +1,62 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import login from "../../../assets/login/login2.jpg";
 import { FaGoogle } from "react-icons/fa";
+import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
+import { GoogleAuthProvider } from "firebase/auth";
 
 const Login = () => {
+  const { signIn, providerLogin } = useContext(AuthContext);
+  const [error, setError] = useState("");
+
+  //google Sign in
+  const googleProvider = new GoogleAuthProvider();
+  const handleGoogleSignIn = () => {
+    providerLogin(googleProvider)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  //sign in with email and password
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    signIn(email, password)
+      .then((result) => {
+        const user = result.user;
+        const currentUser = {
+          uid: user.uid,
+        };
+        console.log(user);
+        form.reset();
+        setError("");
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error.message);
+      });
+  };
+
   return (
-    <div className="min-h-[800px] flex flex-row">
+    <div className="min-h-[800px] grid lg:grid-cols-layout grid-cols-mobile_layout">
       <div>
-        <img className="h-full w-full" src={login} alt="" />
+        <img className="h-auto w-full" src={login} alt="" />
       </div>
-      <div className="flex flex-col lg:mx-24 mx-3 ">
+      <div className="flex flex-col lg:mx-24 mx-3 lg:mb-0 mb-5">
         <h2 className="font-syncopate text-center text-4xl font-bold text-blue-800 mt-20">
           Please Login
         </h2>
         <div className=" h-auto card lg:w-[500px] w-auto  border-2 shadow-xl pt-12 mt-10">
           <div className="card-body pt-0">
-            <form className="flex flex-col">
+            <form onSubmit={handleLogin} className="flex flex-col">
               <div className="mb-6">
                 <label
                   for="email"
@@ -50,7 +91,7 @@ const Login = () => {
               </div>
               <div className="mb-3">
                 <h2 className="text-base text-red-400 text-left font-medium ">
-                  {/* {error} */}
+                  {error}
                 </h2>
               </div>
               <button
@@ -70,7 +111,10 @@ const Login = () => {
               <h2 className=" text-base font-medium text-gray-900 mt-3 text-center">
                 Also Log in With
               </h2>
-              <button className="btn my-3 w-full bg-transparent border-2 border-primary text-gray-800 hover:text-white hover:bg-primary hover:border-2">
+              <button
+                onClick={handleGoogleSignIn}
+                className="btn my-3 w-full bg-transparent border-2 border-primary text-gray-800 hover:text-white hover:bg-primary hover:border-2"
+              >
                 <FaGoogle className="mr-2"></FaGoogle>
                 <h2>Google</h2>
               </button>

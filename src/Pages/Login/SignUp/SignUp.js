@@ -1,20 +1,82 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import signup from "../../../assets/login/signup.jpg";
+import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 
 const SignUp = () => {
+  const [error, setError] = useState("");
+  const { createUser, updateUserProfile } = useContext(AuthContext);
+
+  const handleSignUp = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const photoURL = form.photoURL.value;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        setError("");
+        handleUpdateUserProfile(name, photoURL);
+        form.reset();
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(err.message);
+      });
+  };
+
+  const handleUpdateUserProfile = (name, photoURL) => {
+    const profile = {
+      displayName: name,
+      photoURL: photoURL,
+    };
+    updateUserProfile(profile)
+      .then(() => {})
+      .catch((error) => console.error(error));
+  };
+
   return (
-    <div className="min-h-[800px] flex flex-row">
+    <div className="min-h-[800px] grid lg:grid-cols-layout grid-cols-mobile_layout">
       <div>
         <img className="h-auto w-full" src={signup} alt="" />
       </div>
-      <div className="flex flex-col lg:mx-24 mx-3 ">
+      <div className="flex flex-col lg:mx-24 mx-3 lg:mb-0 mb-3">
         <h2 className="font-syncopate text-center text-4xl font-bold text-blue-800 mt-20">
           Please SignUp
         </h2>
         <div className=" h-auto card lg:w-[500px] w-auto  border-2 shadow-xl pt-12 mt-10">
           <div className="card-body pt-0">
-            <form>
+            <form onSubmit={handleSignUp}>
+              <div className="form-control">
+                <label className="label cursor-pointer">
+                  <span className="label-text text-lg font-medium text-gray-900">
+                    Sign up as Buyer
+                  </span>
+                  <input
+                    type="radio"
+                    name="radio-10"
+                    className="radio checked:bg-red-500"
+                    checked
+                  />
+                </label>
+              </div>
+              <div className="form-control mb-5">
+                <label className="label cursor-pointer">
+                  <span className="label-text text-lg font-medium text-gray-900">
+                    Sign up as Seller
+                  </span>
+                  <input
+                    type="radio"
+                    name="radio-10"
+                    className="radio checked:bg-blue-500"
+                    checked
+                  />
+                </label>
+              </div>
               <div className="mb-6">
                 <label className="block mb-2 text-base font-medium text-gray-900">
                   Your Name
@@ -73,6 +135,11 @@ const SignUp = () => {
                 Sign Up
               </button>
             </form>
+            <div className="mb-3">
+              <h2 className="text-base text-red-400 text-left font-medium ">
+                {error}
+              </h2>
+            </div>
             <div className="mb-3">
               <h2 className=" text-sm  text-gray-800 text-center">
                 Already have an account?{" "}
