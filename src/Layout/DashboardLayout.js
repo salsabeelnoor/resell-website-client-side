@@ -7,8 +7,6 @@ import Header from "../Pages/Shared/Header/Header";
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
   const [isCustomer] = useCustomer(user?.email);
-  console.log("customer state", isCustomer);
-
   return (
     <div>
       <Header></Header>
@@ -29,7 +27,7 @@ const DashboardLayout = () => {
                 <li>
                   <Link
                     className="text-lg font-medium capitalize hover:text-blue-800 rounded-md"
-                    to="/dashboard"
+                    to="/dashboard/myorders"
                   >
                     My Orders
                   </Link>
@@ -37,7 +35,7 @@ const DashboardLayout = () => {
                 <li>
                   <Link
                     className="text-lg font-medium capitalize hover:text-blue-800 rounded-md"
-                    to="/dashboard"
+                    to="/dashboard/wishlist"
                   >
                     WishList
                   </Link>
@@ -49,7 +47,7 @@ const DashboardLayout = () => {
                 <li>
                   <Link
                     className="text-lg font-medium capitalize hover:text-blue-800 rounded-md"
-                    to="/dashboard"
+                    to="/dashboard/addproduct"
                   >
                     Add A Product
                   </Link>
@@ -57,7 +55,7 @@ const DashboardLayout = () => {
                 <li>
                   <Link
                     className="text-lg font-medium capitalize hover:text-blue-800 rounded-md"
-                    to="/dashboard"
+                    to="/dashboard/mybuyers"
                   >
                     My Products
                   </Link>
