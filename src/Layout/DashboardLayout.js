@@ -57,6 +57,14 @@ const DashboardLayout = () => {
                     className="text-lg font-medium capitalize hover:text-blue-800 rounded-md"
                     to="/dashboard/mybuyers"
                   >
+                    My Buyers
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="text-lg font-medium capitalize hover:text-blue-800 rounded-md"
+                    to="/dashboard/myproducts"
+                  >
                     My Products
                   </Link>
                 </li>

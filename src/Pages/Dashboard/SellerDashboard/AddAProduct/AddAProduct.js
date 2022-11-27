@@ -49,6 +49,7 @@ const AddAProduct = () => {
             time,
             date,
             advertise: false,
+            productStatus: "available",
           };
 
           //save product info into database
@@ -243,7 +244,7 @@ const AddAProduct = () => {
           </div>
           <button
             type="submit"
-            className="btn btn-primary text-gray-900 hidden lg:flex mr-2 bg-transparent rounded-lg hover:text-white"
+            className="btn btn-primary text-gray-900 mr-2 bg-transparent rounded-lg hover:text-white"
           >
             POST
           </button>
