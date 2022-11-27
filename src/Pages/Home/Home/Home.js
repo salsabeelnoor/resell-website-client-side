@@ -7,24 +7,24 @@ const Home = () => {
       {/* img  */}
       <section className="banner bg-cover bg-no-repeat lg:min-h-[750px] min-h-[480px]">
         <div className="lg:flex hidden justify-center -ml-96 items-center">
-          <div class="content text-9xl top-12">
+          <div className="content text-9xl top-12">
             <h2>Laptop</h2>
             <h2>Laptop</h2>
           </div>
           <div className="w-[410px]"></div>
-          <div class="content text-9xl top-12">
+          <div className="content text-9xl top-12">
             <h2>Trades</h2>
             <h2>Trades</h2>
           </div>
         </div>
         <div className="lg:hidden flex justify-center">
-          <div class="content text-7xl right-24 top-10">
+          <div className="content text-7xl right-24 top-10">
             <h2>Laptop</h2>
             <h2>Laptop</h2>
           </div>
         </div>
         <div className="lg:hidden flex justify-center mt-28">
-          <div class="content text-7xl right-24">
+          <div className="content text-7xl right-24">
             <h2>Trades</h2>
             <h2>Trades</h2>
           </div>
