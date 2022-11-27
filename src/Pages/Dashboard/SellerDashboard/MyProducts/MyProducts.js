@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import toast from "react-hot-toast";
 
 const MyProducts = () => {
-  const { data: products = [] } = useQuery({
+  const { data: products = [], refetch } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
       const res = await fetch("http://localhost:5000/products");
@@ -13,6 +14,17 @@ const MyProducts = () => {
 
   const handleDelete = (id) => {
     console.log(id);
+    fetch(`http://localhost:5000/products/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("Product deleted successfully");
+          refetch();
+        }
+      })
+      .catch((error) => toast.error("Something went wrong!"));
   };
 
   return (
