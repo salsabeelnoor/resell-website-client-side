@@ -10,7 +10,7 @@ const AdminRoute = ({ children }) => {
   const location = useLocation();
 
   if (loading || isCustomerLoading) {
-    <Loading></Loading>;
+    return <Loading></Loading>;
   }
 
   if (user && isCustomer === "admin") {

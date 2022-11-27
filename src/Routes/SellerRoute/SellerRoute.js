@@ -9,10 +9,8 @@ const SellerRoute = ({ children }) => {
   const [isCustomer, isCustomerLoading] = useCustomer(user?.email);
   const location = useLocation();
 
-  console.log("seller route", isCustomer, isCustomerLoading);
-
   if (loading || isCustomerLoading) {
-    <Loading></Loading>;
+    return <Loading></Loading>;
   }
 
   if (user && isCustomer === "seller") {

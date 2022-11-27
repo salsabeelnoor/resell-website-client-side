@@ -67,7 +67,7 @@ const DashboardLayout = () => {
                 <li>
                   <Link
                     className="text-lg font-medium capitalize hover:text-blue-800 rounded-md"
-                    to="/dashboard"
+                    to="/dashboard/allbuyers"
                   >
                     All Sellers
                   </Link>
@@ -75,7 +75,7 @@ const DashboardLayout = () => {
                 <li>
                   <Link
                     className="text-lg font-medium capitalize hover:text-blue-800 rounded-md"
-                    to="/dashboard"
+                    to="/dashboard/allsellers"
                   >
                     All Buyers
                   </Link>

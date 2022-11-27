@@ -23,6 +23,12 @@ const SignUp = () => {
       email,
       customerState,
     };
+    const sellerCustomer = {
+      name,
+      email,
+      customerState,
+      verified: null,
+    };
     createUser(email, password)
       .then((result) => {
         const user = result.user;
@@ -36,18 +42,34 @@ const SignUp = () => {
         setError(err.message);
       });
 
-    fetch("http://localhost:5000/users", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(customers),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+    if (customerState === "buyer") {
+      fetch("http://localhost:5000/users", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(customers),
       })
-      .catch((error) => console.error(error));
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => console.error(error));
+    }
+    if (customerState === "seller") {
+      fetch("http://localhost:5000/users", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(sellerCustomer),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => console.error(error));
+    }
   };
 
   const handleUpdateUserProfile = (name, photoURL) => {

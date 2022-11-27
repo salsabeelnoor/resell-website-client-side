@@ -12,6 +12,7 @@ import MyProducts from "../../Pages/Dashboard/SellerDashboard/MyProducts/MyProdu
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login/Login";
 import SignUp from "../../Pages/Login/SignUp/SignUp";
+import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoute from "../PrivateRote/PrivateRoute";
 import Route404 from "../Route404/Route404";
 import SellerRoute from "../SellerRoute/SellerRoute";
@@ -78,17 +79,17 @@ export const routes = createBrowserRouter([
       {
         path: "/dashboard/allbuyers",
         element: (
-          <SellerRoute>
+          <AdminRoute>
             <AllBuyers></AllBuyers>
-          </SellerRoute>
+          </AdminRoute>
         ),
       },
       {
         path: "/dashboard/allsellers",
         element: (
-          <SellerRoute>
+          <AdminRoute>
             <AllSellers></AllSellers>
-          </SellerRoute>
+          </AdminRoute>
         ),
       },
     ],
