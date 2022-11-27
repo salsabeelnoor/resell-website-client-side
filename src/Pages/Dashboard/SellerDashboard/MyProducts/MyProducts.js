@@ -12,8 +12,8 @@ const MyProducts = () => {
     },
   });
 
+  //delete product
   const handleDelete = (id) => {
-    console.log(id);
     fetch(`http://localhost:5000/products/${id}`, {
       method: "DELETE",
     })
@@ -21,6 +21,21 @@ const MyProducts = () => {
       .then((data) => {
         if (data.acknowledged) {
           toast.success("Product deleted successfully");
+          refetch();
+        }
+      })
+      .catch((error) => toast.error("Something went wrong!"));
+  };
+
+  //advertise product
+  const handleAdvertise = (id) => {
+    fetch(`http://localhost:5000/products/${id}`, {
+      method: "PUT",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          toast.success("Advertised Successfully");
           refetch();
         }
       })
@@ -52,9 +67,25 @@ const MyProducts = () => {
                 <td>{product.category}</td>
                 <td>{product.productStatus}</td>
                 <td>
-                  <button className="btn btn-xs bg-blue-700 text-white ">
-                    Advertise
-                  </button>
+                  {!product.advertise ? (
+                    <>
+                      <button
+                        onClick={() => handleAdvertise(product._id)}
+                        className="btn btn-xs bg-blue-700 text-white "
+                      >
+                        Advertise
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        disabled
+                        className="btn btn-xs disabled:bg-green-700 disabled:text-white"
+                      >
+                        Advertised
+                      </button>
+                    </>
+                  )}
                 </td>
                 <td>
                   <button
