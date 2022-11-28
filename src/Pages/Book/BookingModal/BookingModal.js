@@ -1,19 +1,51 @@
 import { useQuery } from "@tanstack/react-query";
+import { data } from "autoprefixer";
 import React, { useContext } from "react";
+import toast from "react-hot-toast";
 import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 
 const BookingModal = ({ book, setBook }) => {
   const { user } = useContext(AuthContext);
-  const { productName, resellPrice } = book;
+  const { _id, productName, resellPrice } = book;
 
-  const { data: products = [], refetch } = useQuery({
-    queryKey: ["products"],
-    queryFn: async () => {
-      const res = await fetch("http://localhost:5000/products");
-      const data = await res.json();
-      return data;
-    },
-  });
+  const handleBooking = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const buyerName = user?.displayName;
+    const buyerEmail = user?.email;
+    const bookedProductName = productName;
+    const phone = form.phone.value;
+    const location = form.location.value;
+    console.log(_id);
+
+    const booking = {
+      buyerName,
+      buyerEmail,
+      bookedProductId: _id,
+      bookedProductName,
+      phone,
+      meetingLocation: location,
+    };
+    console.log(booking);
+    //save product info into database
+    fetch("http://localhost:5000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log("api hits", result);
+        if (result.acknowledged) {
+          setBook(null);
+          toast.success("Booking Confirmed");
+        } else {
+          toast.error(result.message);
+        }
+      });
+  };
 
   return (
     <>
@@ -29,7 +61,10 @@ const BookingModal = ({ book, setBook }) => {
           <h3 className="text-lg font-medium mt-5 text-gray-900">
             {productName}
           </h3>
-          <form className="grid grid-cols-1 gap-3 mt-5">
+          <form
+            onSubmit={handleBooking}
+            className="grid grid-cols-1 gap-3 mt-5"
+          >
             <input
               type="text"
               className="font-medium text-lg border-2 border-blue-900 rounded-lg block w-full p-2.5  focus:outline-none focus:border-blue-900 focus:ring-1 focus:ring-blue-900"
@@ -43,12 +78,20 @@ const BookingModal = ({ book, setBook }) => {
               disabled
             />
             <input
-              type="text"
+              type="number"
+              className="font-medium text-lg border-2 border-blue-900 rounded-lg block w-full p-2.5  focus:outline-none focus:border-blue-900 focus:ring-1 focus:ring-blue-900"
+              defaultValue={resellPrice}
+              disabled
+            />
+            <input
+              type="number"
+              name="phone"
               className="font-medium text-lg border-2 border-blue-900 rounded-lg block w-full p-2.5  focus:outline-none focus:border-blue-900 focus:ring-1 focus:ring-blue-900"
               placeholder="Phone"
             />
             <input
               type="text"
+              name="location"
               className="font-medium text-lg border-2 border-blue-900 rounded-lg block w-full p-2.5  focus:outline-none focus:border-blue-900 focus:ring-1 focus:ring-blue-900"
               placeholder="Meeting Location"
             />
