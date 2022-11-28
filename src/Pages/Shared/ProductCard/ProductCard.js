@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, setBook }) => {
   const {
     _id,
     image,
@@ -58,6 +58,7 @@ const ProductCard = ({ product }) => {
           <label
             htmlFor="booking-modal"
             className="btn btn-secondary text-white"
+            onClick={() => setBook(product)}
           >
             Book Now
           </label>

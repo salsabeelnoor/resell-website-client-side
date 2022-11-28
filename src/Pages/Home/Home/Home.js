@@ -13,7 +13,6 @@ const Home = () => {
       <Category></Category>
       <AdvertisedItems></AdvertisedItems>
       <OfferSection></OfferSection>
-      <BookingModal></BookingModal>
     </div>
   );
 };
