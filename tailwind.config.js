@@ -21,7 +21,7 @@ module.exports = {
       {
         qctheme: {
           primary: "#03396c",
-          secondary: "#f6d860",
+          secondary: "#205b7f",
           accent: "#37cdbe",
           neutral: "#3d4451",
           "base-100": "#ffffff",

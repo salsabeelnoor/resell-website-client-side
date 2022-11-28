@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../assets/laptop_logo_1.png";
@@ -6,6 +7,15 @@ import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 const Header = () => {
   const { user, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const { data: categories = [] } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:5000/categories");
+      const data = await res.json();
+      return data;
+    },
+  });
 
   const handleLogOut = () => {
     logOut()
@@ -59,21 +69,17 @@ const Header = () => {
                   </svg>
                 </Link>
                 <ul className="p-2 w-full bg-base-100 rounded-lg">
-                  <li>
-                    <Link className="text-md font-medium uppercase hover:text-blue-800 rounded-md">
-                      Apple
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="text-md font-medium uppercase hover:text-blue-800 rounded-md">
-                      Hp
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="text-md font-medium uppercase hover:text-blue-800 rounded-md">
-                      Dell
-                    </Link>
-                  </li>
+                  {categories.map((category) => (
+                    <li
+                      className="capitalize text-lg font-medium"
+                      key={category._id}
+                      value={category.category_name}
+                    >
+                      <Link to={`/categories/${category._id}`}>
+                        {category.category_name}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               </li>
 
@@ -140,21 +146,17 @@ const Header = () => {
                     </svg>
                   </Link>
                   <ul className="p-2 w-full bg-base-100 rounded-lg">
-                    <li>
-                      <Link className="text-md font-medium uppercase hover:text-blue-800 rounded-md">
-                        Apple
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="text-md font-medium uppercase hover:text-blue-800 rounded-md">
-                        Hp
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="text-md font-medium uppercase hover:text-blue-800 rounded-md">
-                        Dell
-                      </Link>
-                    </li>
+                    {categories.map((category) => (
+                      <li
+                        className="capitalize text-lg font-medium"
+                        key={category._id}
+                        value={category.category_name}
+                      >
+                        <Link to={`/categories/${category._id}`}>
+                          {category.category_name}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </li>
                 <li>

@@ -20,14 +20,9 @@ const Category = () => {
       </h2>
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-10 items-center justify-items-center mx-3 lg:mx-auto cursor-pointer">
         {categories.map((category) => (
-          <button>
-            <Link to={`/categories/${category._id}`}>
-              <CategoryCard
-                key={category._id}
-                category={category}
-              ></CategoryCard>
-            </Link>
-          </button>
+          <Link to={`/categories/${category._id}`}>
+            <CategoryCard key={category._id} category={category}></CategoryCard>
+          </Link>
         ))}
       </div>
     </div>

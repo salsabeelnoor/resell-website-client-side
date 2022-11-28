@@ -22,7 +22,7 @@ const CategoryById = () => {
 
   return (
     <div className="container mx-auto mt-24 min-h-screen">
-      <h2 className="text-start text-5xl font-medium mb-16 text-gray-600">
+      <h2 className="lg:text-start text-center lg:text-5xl text-4xl font-medium mb-16 text-gray-600">
         Showing results of{" "}
         <span className="uppercase">{categoryById.category_name}</span>
       </h2>

@@ -1,4 +1,5 @@
 import React from "react";
+import BookingModal from "../../Book/BookingModal/BookingModal";
 import AdvertisedItems from "../AdvertisedItems/AdvertisedItems";
 import Banner from "../Banner/Banner";
 import Category from "../Category/Category";
@@ -12,6 +13,7 @@ const Home = () => {
       <Category></Category>
       <AdvertisedItems></AdvertisedItems>
       <OfferSection></OfferSection>
+      <BookingModal></BookingModal>
     </div>
   );
 };

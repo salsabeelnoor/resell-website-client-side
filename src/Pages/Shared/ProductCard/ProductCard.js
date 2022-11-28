@@ -52,9 +52,16 @@ const ProductCard = ({ product }) => {
         </div>
         <h2 className="text-base text-gray-600 capitalize mt-5 mr-10">
           <span className="text-gray-600 font-medium">Description:</span>
-          {detail.length > 600 ? <>{detail.slice(0, 600) + ".."}</> : detail}
+          {detail.length > 500 ? <>{detail.slice(0, 500) + ".."}</> : detail}
         </h2>
-        <div className="card-actions justify-end"></div>
+        <div className="card-actions lg:justify-end justify-center mt-3">
+          <label
+            htmlFor="booking-modal"
+            className="btn btn-secondary text-white"
+          >
+            Book Now
+          </label>
+        </div>
       </div>
     </div>
   );
