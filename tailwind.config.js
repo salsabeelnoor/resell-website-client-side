@@ -11,6 +11,7 @@ module.exports = {
       gridTemplateColumns: {
         layout: "4fr 1fr",
         mobile_layout: "1fr",
+        card_layout: "1fr 3fr",
       },
     },
   },

@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../../../Contexts/AuthProvider/AuthProvider";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../../../../Components/Loading/Loading";
 
 const AddAProduct = () => {
   const { user } = useContext(AuthContext);
@@ -13,6 +15,16 @@ const AddAProduct = () => {
   } = useForm();
 
   const imgHostKey = process.env.REACT_APP_imgbb_key;
+
+  //product category
+  const { data: categories, isLoading } = useQuery({
+    queryKey: ["category"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:5000/categories");
+      const data = await res.json();
+      return data;
+    },
+  });
 
   const handleAddProduct = (data) => {
     const formData = new FormData();
@@ -37,6 +49,7 @@ const AddAProduct = () => {
           console.log(data);
           const product = {
             name: data.name,
+            email: user?.email,
             productName: data.productName,
             category: data.category,
             yearOfPurchase: data.purchaseYear,
@@ -45,6 +58,7 @@ const AddAProduct = () => {
             resellPrice: data.resellPrice,
             phone: data.phone,
             image: imgData.data.url,
+            location: data.location,
             detail: data.productDetail,
             time,
             date,
@@ -69,6 +83,11 @@ const AddAProduct = () => {
       });
     reset();
   };
+
+  //Loading
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div className="container mx-auto py-10">
@@ -115,15 +134,15 @@ const AddAProduct = () => {
                 {...register("category")}
                 className=" border-2 border-blue-900 rounded-lg block w-full p-2.5  focus:outline-none focus:border-blue-900 focus:ring-1 focus:ring-blue-900"
               >
-                <option className="uppercase" value="apple">
-                  Apple
-                </option>
-                <option className="uppercase" value="hp">
-                  hp
-                </option>
-                <option className="uppercase" value="dell">
-                  dell
-                </option>
+                {categories.map((category) => (
+                  <option
+                    className="capitalize"
+                    key={category._id}
+                    value={category.category_name}
+                  >
+                    {category.category_name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

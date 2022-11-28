@@ -64,7 +64,7 @@ const MyProducts = () => {
               <tr key={product._id}>
                 <th>{i + 1}</th>
                 <td>{product.productName}</td>
-                <td>{product.category}</td>
+                <td className="capitalize">{product.category}</td>
                 <td>{product.productStatus}</td>
                 <td>
                   {!product.advertise ? (
