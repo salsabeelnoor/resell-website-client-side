@@ -6,7 +6,7 @@ import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 
 const BookingModal = ({ book, setBook }) => {
   const { user } = useContext(AuthContext);
-  const { _id, productName, resellPrice } = book;
+  const { _id, productName, resellPrice, image } = book;
 
   const handleBooking = (event) => {
     event.preventDefault();
@@ -14,6 +14,7 @@ const BookingModal = ({ book, setBook }) => {
     const buyerName = user?.displayName;
     const buyerEmail = user?.email;
     const bookedProductName = productName;
+    const bookerProductPrice = resellPrice;
     const phone = form.phone.value;
     const location = form.location.value;
     console.log(_id);
@@ -23,8 +24,11 @@ const BookingModal = ({ book, setBook }) => {
       buyerEmail,
       bookedProductId: _id,
       bookedProductName,
+      bookerProductPrice,
+      bookedProductImage: image,
       phone,
       meetingLocation: location,
+      paymentStatus: false,
     };
     console.log(booking);
     //save product info into database

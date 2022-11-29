@@ -1,6 +1,6 @@
 import React from "react";
 
-const ProductCard = ({ product, setBook }) => {
+const ProductCard = ({ product, setBook, wishListBtn, setWishListBtn }) => {
   const {
     _id,
     image,
@@ -55,6 +55,15 @@ const ProductCard = ({ product, setBook }) => {
           {detail.length > 500 ? <>{detail.slice(0, 500) + ".."}</> : detail}
         </h2>
         <div className="card-actions lg:justify-end justify-center mt-3">
+          {wishListBtn && (
+            <label
+              htmlFor="booking-modal"
+              className="btn btn-secondary text-gray-800 bg-transparent hover:bg-secondary hover:text-white"
+              onClick={() => setBook(product)}
+            >
+              Add to WishList
+            </label>
+          )}
           <label
             htmlFor="booking-modal"
             className="btn btn-secondary text-white"

@@ -19,7 +19,7 @@ const DashboardLayout = () => {
         <div className="drawer-content">
           <Outlet></Outlet>
         </div>
-        <div className="drawer-side">
+        <div className="drawer-side  mt-0.5 rounded-md bg-gray-200">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80 text-base-content">
             {isCustomer === "buyer" && (
@@ -52,14 +52,7 @@ const DashboardLayout = () => {
                     Add A Product
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    className="text-lg font-medium capitalize hover:text-blue-800 rounded-md"
-                    to="/dashboard/mybuyers"
-                  >
-                    My Buyers
-                  </Link>
-                </li>
+
                 <li>
                   <Link
                     className="text-lg font-medium capitalize hover:text-blue-800 rounded-md"

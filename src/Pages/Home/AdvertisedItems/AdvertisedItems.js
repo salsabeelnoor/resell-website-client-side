@@ -6,6 +6,7 @@ import ProductCard from "../../Shared/ProductCard/ProductCard";
 
 const AdvertisedItems = () => {
   const [book, setBook] = useState(null);
+  const [wishListBtn, setWishListBtn] = useState(false);
 
   const { data: products = [], isLoading } = useQuery({
     queryKey: ["products"],
@@ -32,6 +33,8 @@ const AdvertisedItems = () => {
             product.productStatus === "available" && (
               <ProductCard
                 key={product._id}
+                wishListBtn={wishListBtn}
+                setWishListBtn={setWishListBtn}
                 product={product}
                 setBook={setBook}
               ></ProductCard>
