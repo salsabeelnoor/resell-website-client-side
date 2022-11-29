@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Loading from "../../../Components/Loading/Loading";
@@ -11,7 +10,6 @@ const CategoryById = () => {
   const [loading, setLoading] = useState(false);
   const [book, setBook] = useState(null);
   const [wishListBtn, setWishListBtn] = useState(true);
-
   useEffect(() => {
     setLoading(true);
     fetch(

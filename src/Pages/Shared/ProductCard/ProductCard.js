@@ -1,6 +1,13 @@
-import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import React, { useContext } from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import Loading from "../../../Components/Loading/Loading";
+import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 
-const ProductCard = ({ product, setBook, wishListBtn, setWishListBtn }) => {
+const ProductCard = ({ product, setBook, wishListBtn }) => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const {
     _id,
     image,
@@ -15,6 +22,62 @@ const ProductCard = ({ product, setBook, wishListBtn, setWishListBtn }) => {
     detail,
     location,
   } = product;
+
+  const { data: users = [], isLoading } = useQuery({
+    queryKey: ["email", user?.email],
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:5000/users/${user?.email}`);
+      const data = await res.json();
+      return data;
+    },
+  });
+
+  if (isLoading) {
+    <Loading></Loading>;
+  }
+
+  const handleWishList = (id) => {
+    if (user?.uid === null || users.customerState !== "buyer") {
+      navigate("/login");
+      toast.error("Please register as buyer to add wishlist");
+    } else {
+      const wishList = {
+        buyerName: user?.displayName,
+        buyerEmail: user?.email,
+        productId: id,
+        productName,
+        productPrice: resellPrice,
+        productImage: image,
+        paymentStatus: false,
+      };
+
+      fetch("http://localhost:5000/wishlists", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(wishList),
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          console.log("api hits", result);
+          if (result.acknowledged) {
+            toast.success("Added to wishlist");
+          } else {
+            toast.error(result.message);
+          }
+        });
+    }
+  };
+
+  const handleBook = (product) => {
+    if (user?.uid === null || users.customerState !== "buyer") {
+      navigate("/login");
+      toast.error("Please register as buyer to Book");
+    } else {
+      setBook(product);
+    }
+  };
 
   return (
     <div className="card  grid lg:grid-cols-card_layout grid-cols-mobile_layout bg-base-100 shadow-xl mb-7 lg:h-96 h-auto">
@@ -59,7 +122,7 @@ const ProductCard = ({ product, setBook, wishListBtn, setWishListBtn }) => {
             <label
               htmlFor="booking-modal"
               className="btn btn-secondary text-gray-800 bg-transparent hover:bg-secondary hover:text-white"
-              onClick={() => setBook(product)}
+              onClick={() => handleWishList(_id)}
             >
               Add to WishList
             </label>
@@ -67,7 +130,7 @@ const ProductCard = ({ product, setBook, wishListBtn, setWishListBtn }) => {
           <label
             htmlFor="booking-modal"
             className="btn btn-secondary text-white"
-            onClick={() => setBook(product)}
+            onClick={() => handleBook(product)}
           >
             Book Now
           </label>

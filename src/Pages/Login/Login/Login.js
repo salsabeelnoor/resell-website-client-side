@@ -80,10 +80,7 @@ const Login = () => {
           <div className="card-body pt-0">
             <form onSubmit={handleLogin} className="flex flex-col">
               <div className="mb-6">
-                <label
-                  for="email"
-                  className="block mb-2 text-base font-medium text-gray-900"
-                >
+                <label className="block mb-2 text-base font-medium text-gray-900">
                   Your email
                 </label>
                 <input
@@ -96,10 +93,7 @@ const Login = () => {
                 />
               </div>
               <div className="mb-6">
-                <label
-                  for="password"
-                  className="block mb-2 text-base font-medium text-gray-900"
-                >
+                <label className="block mb-2 text-base font-medium text-gray-900">
                   Your password
                 </label>
                 <input

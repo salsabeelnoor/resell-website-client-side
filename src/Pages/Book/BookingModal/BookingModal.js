@@ -1,12 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
-import { data } from "autoprefixer";
 import React, { useContext } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Contexts/AuthProvider/AuthProvider";
 
 const BookingModal = ({ book, setBook }) => {
   const { user } = useContext(AuthContext);
   const { _id, productName, resellPrice, image } = book;
+  const navigate = useNavigate();
 
   const handleBooking = (event) => {
     event.preventDefault();
@@ -31,24 +31,30 @@ const BookingModal = ({ book, setBook }) => {
       paymentStatus: false,
     };
     console.log(booking);
-    //save product info into database
-    fetch("http://localhost:5000/bookings", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(booking),
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        console.log("api hits", result);
-        if (result.acknowledged) {
-          setBook(null);
-          toast.success("Booking Confirmed");
-        } else {
-          toast.error(result.message);
-        }
-      });
+
+    if (user?.uid) {
+      //save product info into database
+      fetch("http://localhost:5000/bookings", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(booking),
+      })
+        .then((res) => res.json())
+        .then((result) => {
+          console.log("api hits", result);
+          if (result.acknowledged) {
+            setBook(null);
+            toast.success("Booking Confirmed");
+          } else {
+            toast.error(result.message);
+          }
+        });
+    } else {
+      navigate("/login");
+      toast.error("Please Login to Book this item");
+    }
   };
 
   return (
