@@ -1,20 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useContext } from "react";
+import Loading from "../../../../Components/Loading/Loading";
+import { AuthContext } from "../../../../Contexts/AuthProvider/AuthProvider";
 
 const MyOrders = () => {
-  const { data: bookings = [] } = useQuery({
-    queryKey: ["bookings"],
+  const { user } = useContext(AuthContext);
+
+  const { data: bookings = [], isLoading } = useQuery({
+    queryKey: ["buyerEmail", user?.email],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/bookings");
+      const res = await fetch(`http://localhost:5000/bookings/${user?.email}`);
       const data = await res.json();
       return data;
     },
   });
+  if (isLoading) {
+    <Loading></Loading>;
+  }
 
   return (
     <div className="container lg:mx-auto mx-2 py-10">
       <h2 className="lg:text-5xl text-blue-900 font-bold lg:text-start text-center text-4xl mb-5">
-        My Products
+        My Orders
       </h2>
       <div className="overflow-x-auto">
         <table className="table w-full">
