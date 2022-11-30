@@ -5,7 +5,7 @@ A seller can add and delete products. A buyer can book a product, add it to wish
 An admin can see all buyers and sellers. Admin can also varify seller.
 
 
-# Live server
+# Live Website
 https://resell-website-react.web.app/
 
 
