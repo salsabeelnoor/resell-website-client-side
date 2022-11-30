@@ -1,11 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 import Loading from "../../../../Components/Loading/Loading";
 import { AuthContext } from "../../../../Contexts/AuthProvider/AuthProvider";
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
+  const { orderPayment, setOrderPayment } = useState(true);
 
   const {
     data: bookings = [],
@@ -52,6 +54,7 @@ const MyOrders = () => {
               <th>Title</th>
               <th>Price</th>
               <th>Pay</th>
+              <th>Transaction Id</th>
               <th>Delete</th>
             </tr>
           </thead>
@@ -69,10 +72,27 @@ const MyOrders = () => {
                 <td>{booking.bookedProductName}</td>
                 <td>{booking.bookerProductPrice}</td>
                 <td>
-                  <button className="btn btn-sm bg-blue-800 text-white ">
-                    Pay
-                  </button>
+                  {!booking.paymentStatus ? (
+                    <>
+                      <Link
+                        to={`/dashboard/payment/${booking._id}`}
+                        className="btn btn-xs bg-blue-700 text-white "
+                      >
+                        Pay
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        disabled
+                        className="btn btn-xs disabled:bg-green-700 disabled:text-white"
+                      >
+                        Paid
+                      </button>
+                    </>
+                  )}
                 </td>
+                <td>{booking.transactionId}</td>
                 <td>
                   <button
                     onClick={() => handleDelete(booking._id)}

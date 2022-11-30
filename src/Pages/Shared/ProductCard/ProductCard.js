@@ -55,7 +55,7 @@ const ProductCard = ({ product, setBook, wishListBtn }) => {
         buyerEmail: user?.email,
         productId: id,
         productName,
-        productPrice: resellPrice,
+        bookerProductPrice: resellPrice,
         productImage: image,
         paymentStatus: false,
       };

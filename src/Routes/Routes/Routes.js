@@ -2,16 +2,20 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import Main from "../../Layout/Main";
+import Blog from "../../Pages/Blog/Blog";
 import CategoryById from "../../Pages/CategoryById/CategoryById/CategoryById";
 import AllBuyers from "../../Pages/Dashboard/AdminDashboard/AllBuyers/AllBuyers";
 import AllSellers from "../../Pages/Dashboard/AdminDashboard/AllSellers/AllSellers";
 import MyOrders from "../../Pages/Dashboard/BuyerDashboard/MyOrders/MyOrders";
 import WishList from "../../Pages/Dashboard/BuyerDashboard/WishList/WishList";
+import Payment from "../../Pages/Dashboard/Payment/Payment";
+import WishListPayment from "../../Pages/Dashboard/Payment/WishListPayment";
 import AddAProduct from "../../Pages/Dashboard/SellerDashboard/AddAProduct/AddAProduct";
 import MyProducts from "../../Pages/Dashboard/SellerDashboard/MyProducts/MyProducts";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login/Login";
 import SignUp from "../../Pages/Login/SignUp/SignUp";
+import Displayerror from "../../Pages/Shared/DisplayError/Displayerror";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoute from "../PrivateRote/PrivateRoute";
 import Route404 from "../Route404/Route404";
@@ -21,6 +25,7 @@ export const routes = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <Displayerror></Displayerror>,
     children: [
       {
         path: "/",
@@ -33,6 +38,10 @@ export const routes = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUp></SignUp>,
+      },
+      {
+        path: "/blog",
+        element: <Blog></Blog>,
       },
       {
         path: "/categories/:id",
@@ -49,6 +58,7 @@ export const routes = createBrowserRouter([
         <DashboardLayout></DashboardLayout>
       </PrivateRoute>
     ),
+    errorElement: <Displayerror></Displayerror>,
     children: [
       {
         path: "/dashboard/myorders",
@@ -57,6 +67,18 @@ export const routes = createBrowserRouter([
       {
         path: "/dashboard/wishlist",
         element: <WishList></WishList>,
+      },
+      {
+        path: "/dashboard/payment/:id",
+        element: <Payment></Payment>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/bookings/payment/${params.id}`),
+      },
+      {
+        path: "/dashboard/wishlist/payment/:id",
+        element: <WishListPayment></WishListPayment>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/wishlists/payment/${params.id}`),
       },
       {
         path: "/dashboard/addproduct",
