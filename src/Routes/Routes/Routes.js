@@ -47,7 +47,9 @@ export const routes = createBrowserRouter([
         path: "/categories/:id",
         element: <CategoryById></CategoryById>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/categories/${params.id}`),
+          fetch(
+            `https://resell-website-assignment-server-side.vercel.app/categories/${params.id}`
+          ),
       },
     ],
   },
@@ -72,13 +74,17 @@ export const routes = createBrowserRouter([
         path: "/dashboard/payment/:id",
         element: <Payment></Payment>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/bookings/payment/${params.id}`),
+          fetch(
+            `https://resell-website-assignment-server-side.vercel.app/bookings/payment/${params.id}`
+          ),
       },
       {
         path: "/dashboard/wishlist/payment/:id",
         element: <WishListPayment></WishListPayment>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/wishlists/payment/${params.id}`),
+          fetch(
+            `https://resell-website-assignment-server-side.vercel.app/wishlists/payment/${params.id}`
+          ),
       },
       {
         path: "/dashboard/addproduct",

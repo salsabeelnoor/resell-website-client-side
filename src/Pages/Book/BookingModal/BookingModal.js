@@ -34,13 +34,16 @@ const BookingModal = ({ book, setBook }) => {
 
     if (user?.uid) {
       //save product info into database
-      fetch("http://localhost:5000/bookings", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(booking),
-      })
+      fetch(
+        "https://resell-website-assignment-server-side.vercel.app/bookings",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(booking),
+        }
+      )
         .then((res) => res.json())
         .then((result) => {
           console.log("api hits", result);

@@ -27,13 +27,16 @@ const Login = () => {
           customerState: "buyer",
         };
         //send customer info to database
-        fetch("http://localhost:5000/users", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(customers),
-        })
+        fetch(
+          "https://resell-website-assignment-server-side.vercel.app/users",
+          {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(customers),
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             console.log(data);

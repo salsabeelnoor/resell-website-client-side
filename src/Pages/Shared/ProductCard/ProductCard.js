@@ -26,7 +26,9 @@ const ProductCard = ({ product, setBook, wishListBtn }) => {
   const { data: customers = [] } = useQuery({
     queryKey: ["email", email],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/users/${email}`);
+      const res = await fetch(
+        `https://resell-website-assignment-server-side.vercel.app/users/${email}`
+      );
       const data = await res.json();
       return data;
     },
@@ -35,7 +37,9 @@ const ProductCard = ({ product, setBook, wishListBtn }) => {
   const { data: users = [], isLoading } = useQuery({
     queryKey: ["email", user?.email],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/users/${user?.email}`);
+      const res = await fetch(
+        `https://resell-website-assignment-server-side.vercel.app/users/${user?.email}`
+      );
       const data = await res.json();
       return data;
     },
@@ -60,13 +64,16 @@ const ProductCard = ({ product, setBook, wishListBtn }) => {
         paymentStatus: false,
       };
 
-      fetch("http://localhost:5000/wishlists", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(wishList),
-      })
+      fetch(
+        "https://resell-website-assignment-server-side.vercel.app/wishlists",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(wishList),
+        }
+      )
         .then((res) => res.json())
         .then((result) => {
           console.log("api hits", result);

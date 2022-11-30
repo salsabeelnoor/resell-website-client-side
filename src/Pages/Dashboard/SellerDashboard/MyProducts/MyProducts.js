@@ -14,7 +14,9 @@ const MyProducts = () => {
   } = useQuery({
     queryKey: ["products", user?.email],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/products/${user?.email}`);
+      const res = await fetch(
+        `https://resell-website-assignment-server-side.vercel.app/products/${user?.email}`
+      );
       const data = await res.json();
       return data;
     },
@@ -26,9 +28,12 @@ const MyProducts = () => {
 
   //delete product
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/products/${id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://resell-website-assignment-server-side.vercel.app/products/${id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
@@ -41,9 +46,12 @@ const MyProducts = () => {
 
   //advertise product
   const handleAdvertise = (id) => {
-    fetch(`http://localhost:5000/products/${id}`, {
-      method: "PUT",
-    })
+    fetch(
+      `https://resell-website-assignment-server-side.vercel.app/products/${id}`,
+      {
+        method: "PUT",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {

@@ -45,7 +45,7 @@ const SignUp = () => {
       });
 
     if (customerState === "buyer") {
-      fetch("http://localhost:5000/users", {
+      fetch("https://resell-website-assignment-server-side.vercel.app/users", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -59,7 +59,7 @@ const SignUp = () => {
         .catch((error) => console.error(error));
     }
     if (customerState === "seller") {
-      fetch("http://localhost:5000/users", {
+      fetch("https://resell-website-assignment-server-side.vercel.app/users", {
         method: "POST",
         headers: {
           "content-type": "application/json",

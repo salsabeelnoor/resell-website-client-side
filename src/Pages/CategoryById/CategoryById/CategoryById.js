@@ -15,7 +15,7 @@ const CategoryById = () => {
   useEffect(() => {
     setLoading(true);
     fetch(
-      `http://localhost:5000/products?category=${categoryById.category_name}`
+      `https://resell-website-assignment-server-side.vercel.app/products?category=${categoryById.category_name}`
     )
       .then((res) => res.json())
       .then((data) => {

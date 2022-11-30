@@ -16,7 +16,9 @@ const MyOrders = () => {
   } = useQuery({
     queryKey: ["buyerEmail", user?.email],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/bookings/${user?.email}`);
+      const res = await fetch(
+        `https://resell-website-assignment-server-side.vercel.app/bookings/${user?.email}`
+      );
       const data = await res.json();
       return data;
     },
@@ -27,9 +29,12 @@ const MyOrders = () => {
 
   //delete product
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/bookings/${id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://resell-website-assignment-server-side.vercel.app/bookings/${id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {

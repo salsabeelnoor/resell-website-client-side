@@ -14,7 +14,9 @@ const AdvertisedItems = () => {
   const { data: customers = [] } = useQuery({
     queryKey: ["customers"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users");
+      const res = await fetch(
+        "https://resell-website-assignment-server-side.vercel.app/users"
+      );
       const data = await res.json();
       return data;
     },
@@ -22,7 +24,7 @@ const AdvertisedItems = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:5000/products")
+    fetch("https://resell-website-assignment-server-side.vercel.app/products")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);

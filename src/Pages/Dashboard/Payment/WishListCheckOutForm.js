@@ -20,11 +20,14 @@ const CheckOutForm = ({ bookingData }) => {
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("http://localhost:5000/create-payment-intent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ bookerProductPrice }),
-    })
+    fetch(
+      "https://resell-website-assignment-server-side.vercel.app/create-payment-intent",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bookerProductPrice }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
   }, [bookerProductPrice]);
@@ -81,13 +84,16 @@ const CheckOutForm = ({ bookingData }) => {
         productId: productId,
       };
       //post
-      fetch("http://localhost:5000/payments", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(payment),
-      })
+      fetch(
+        "https://resell-website-assignment-server-side.vercel.app/payments",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(payment),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -97,9 +103,12 @@ const CheckOutForm = ({ bookingData }) => {
             setTransactionId(paymentIntent.id);
 
             //put
-            fetch(`http://localhost:5000/wishlist/${_id}`, {
-              method: "PUT",
-            })
+            fetch(
+              `https://resell-website-assignment-server-side.vercel.app/wishlist/${_id}`,
+              {
+                method: "PUT",
+              }
+            )
               .then((res) => res.json())
               .then((data) => {
                 if (data.modifiedCount > 0) {
@@ -108,9 +117,12 @@ const CheckOutForm = ({ bookingData }) => {
               })
               .catch((error) => console.error(error));
             // //put
-            fetch(`http://localhost:5000/products/payment/${productId}`, {
-              method: "PUT",
-            })
+            fetch(
+              `https://resell-website-assignment-server-side.vercel.app/products/payment/${productId}`,
+              {
+                method: "PUT",
+              }
+            )
               .then((res) => res.json())
               .then((data) => {
                 if (data.modifiedCount > 0) {
@@ -119,7 +131,7 @@ const CheckOutForm = ({ bookingData }) => {
               })
               .catch((error) => console.error(error));
 
-            navigate("/dashboard/myorders");
+            navigate("/dashboard/wishlist");
           }
         });
     }

@@ -15,7 +15,9 @@ const WishList = () => {
   } = useQuery({
     queryKey: ["buyerEmail", user?.email],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5000/wishlists/${user?.email}`);
+      const res = await fetch(
+        `https://resell-website-assignment-server-side.vercel.app/wishlists/${user?.email}`
+      );
       const data = await res.json();
       return data;
     },
@@ -26,9 +28,12 @@ const WishList = () => {
 
   //delete product
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/wishlists/${id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://resell-website-assignment-server-side.vercel.app/wishlists/${id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
