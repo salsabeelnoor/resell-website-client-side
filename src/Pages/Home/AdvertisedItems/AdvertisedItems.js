@@ -11,14 +11,14 @@ const AdvertisedItems = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // const { data: products = [], isLoading } = useQuery({
-  //   queryKey: ["products"],
-  //   queryFn: async () => {
-  //     const res = await fetch("http://localhost:5000/products");
-  //     const data = await res.json();
-  //     return data;
-  //   },
-  // });
+  const { data: customers = [] } = useQuery({
+    queryKey: ["customers"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:5000/users");
+      const data = await res.json();
+      return data;
+    },
+  });
 
   useEffect(() => {
     setLoading(true);

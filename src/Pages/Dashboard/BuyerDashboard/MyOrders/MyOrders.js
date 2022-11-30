@@ -1,12 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
+import toast from "react-hot-toast";
 import Loading from "../../../../Components/Loading/Loading";
 import { AuthContext } from "../../../../Contexts/AuthProvider/AuthProvider";
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
 
-  const { data: bookings = [], isLoading } = useQuery({
+  const {
+    data: bookings = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["buyerEmail", user?.email],
     queryFn: async () => {
       const res = await fetch(`http://localhost:5000/bookings/${user?.email}`);
@@ -17,6 +22,21 @@ const MyOrders = () => {
   if (isLoading) {
     <Loading></Loading>;
   }
+
+  //delete product
+  const handleDelete = (id) => {
+    fetch(`http://localhost:5000/bookings/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("Product deleted successfully");
+          refetch();
+        }
+      })
+      .catch((error) => toast.error("Something went wrong!"));
+  };
 
   return (
     <div className="container lg:mx-auto mx-2 py-10">
@@ -32,6 +52,7 @@ const MyOrders = () => {
               <th>Title</th>
               <th>Price</th>
               <th>Pay</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -50,6 +71,14 @@ const MyOrders = () => {
                 <td>
                   <button className="btn btn-sm bg-blue-800 text-white ">
                     Pay
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleDelete(booking._id)}
+                    className="btn btn-xs bg-red-700 text-white "
+                  >
+                    Delete
                   </button>
                 </td>
               </tr>

@@ -23,6 +23,15 @@ const ProductCard = ({ product, setBook, wishListBtn }) => {
     location,
   } = product;
 
+  const { data: customers = [] } = useQuery({
+    queryKey: ["email", email],
+    queryFn: async () => {
+      const res = await fetch(`http://localhost:5000/users/${email}`);
+      const data = await res.json();
+      return data;
+    },
+  });
+
   const { data: users = [], isLoading } = useQuery({
     queryKey: ["email", user?.email],
     queryFn: async () => {
@@ -95,9 +104,28 @@ const ProductCard = ({ product, setBook, wishListBtn }) => {
             <span className="text-gray-600 font-medium">Year of Purchase:</span>{" "}
             {yearOfPurchase}
           </h2>
-          <h2 className="text-base text-gray-600 capitalize">
-            <span className="text-gray-600 font-medium">Posted By:</span> {name}
-          </h2>
+          <div className="flex">
+            <h2 className="text-base text-gray-600 capitalize">
+              <span className="text-gray-600 font-medium">Posted By:</span>{" "}
+              {name}
+            </h2>
+            {customers.verified && (
+              <div className="tooltip" data-tip="varified seller">
+                <svg
+                  className="w-5 h-5 ml-1.5 text-green-500 flex-shrink-0 cursor-pointer"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+            )}
+          </div>
         </div>
         <div className="grid lg:grid-cols-3 grid-cols-1">
           <h2 className="text-base text-gray-600 capitalize">

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../../Components/Loading/Loading";
+import { useNavigate } from "react-router-dom";
 
 const AddAProduct = () => {
   const { user } = useContext(AuthContext);
@@ -13,6 +14,7 @@ const AddAProduct = () => {
     reset,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
 
   const imgHostKey = process.env.REACT_APP_imgbb_key;
 
@@ -76,7 +78,7 @@ const AddAProduct = () => {
           })
             .then((res) => res.json())
             .then((result) => {
-              console.log("api hits", result);
+              navigate("/dashboard/myproducts");
               toast.success(`${data.productName} is added successfully`);
             });
         }

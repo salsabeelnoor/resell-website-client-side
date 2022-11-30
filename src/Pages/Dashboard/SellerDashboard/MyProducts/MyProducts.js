@@ -1,16 +1,28 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useContext } from "react";
 import toast from "react-hot-toast";
+import Loading from "../../../../Components/Loading/Loading";
+import { AuthContext } from "../../../../Contexts/AuthProvider/AuthProvider";
 
 const MyProducts = () => {
-  const { data: products = [], refetch } = useQuery({
-    queryKey: ["products"],
+  const { user } = useContext(AuthContext);
+
+  const {
+    data: products = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["products", user?.email],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/products");
+      const res = await fetch(`http://localhost:5000/products/${user?.email}`);
       const data = await res.json();
       return data;
     },
   });
+
+  if (isLoading) {
+    <Loading></Loading>;
+  }
 
   //delete product
   const handleDelete = (id) => {

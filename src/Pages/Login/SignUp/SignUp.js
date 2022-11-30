@@ -21,13 +21,15 @@ const SignUp = () => {
     const customers = {
       name,
       email,
+      image: photoURL,
       customerState,
     };
     const sellerCustomer = {
       name,
       email,
+      image: photoURL,
       customerState,
-      verified: null,
+      verified: false,
     };
     createUser(email, password)
       .then((result) => {

@@ -23,6 +23,7 @@ const Login = () => {
         const customers = {
           name: user.displayName,
           email: user.email,
+          image: user.photoURL,
           customerState: "buyer",
         };
         //send customer info to database

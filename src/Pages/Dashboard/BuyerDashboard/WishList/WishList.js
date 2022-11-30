@@ -1,12 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
+import toast from "react-hot-toast";
 import Loading from "../../../../Components/Loading/Loading";
 import { AuthContext } from "../../../../Contexts/AuthProvider/AuthProvider";
 
 const WishList = () => {
   const { user } = useContext(AuthContext);
 
-  const { data: wishLists = [], isLoading } = useQuery({
+  const {
+    data: wishLists = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["buyerEmail", user?.email],
     queryFn: async () => {
       const res = await fetch(`http://localhost:5000/wishlists/${user?.email}`);
@@ -17,6 +22,21 @@ const WishList = () => {
   if (isLoading) {
     <Loading></Loading>;
   }
+
+  //delete product
+  const handleDelete = (id) => {
+    fetch(`http://localhost:5000/wishlists/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          toast.success("Product deleted successfully");
+          refetch();
+        }
+      })
+      .catch((error) => toast.error("Something went wrong!"));
+  };
 
   return (
     <div className="container lg:mx-auto mx-2 py-10">
@@ -32,28 +52,41 @@ const WishList = () => {
               <th>Title</th>
               <th>Price</th>
               <th>Pay</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
-            {wishLists.map((wishlist, i) => (
-              <tr key={wishlist._id}>
-                <th>{i + 1}</th>
-                <td>
-                  <div className="avatar">
-                    <div className="w-[72px] rounded-full">
-                      <img src={wishlist.productImage} alt="" />
+            {wishLists.map((wishlist, i) =>
+              !wishlist.paymentStatus ? (
+                <tr key={wishlist._id}>
+                  <th>{i + 1}</th>
+                  <td>
+                    <div className="avatar">
+                      <div className="w-[72px] rounded-full">
+                        <img src={wishlist.productImage} alt="" />
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td>{wishlist.productName}</td>
-                <td>{wishlist.productPrice}</td>
-                <td>
-                  <button className="btn btn-sm bg-blue-800 text-white ">
-                    Pay
-                  </button>
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td>{wishlist.productName}</td>
+                  <td>{wishlist.productPrice}</td>
+                  <td>
+                    <button className="btn btn-sm bg-blue-800 text-white ">
+                      Pay
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => handleDelete(wishlist._id)}
+                      className="btn btn-xs bg-red-700 text-white "
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ) : (
+                ""
+              )
+            )}
           </tbody>
         </table>
       </div>
