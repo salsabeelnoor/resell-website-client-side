@@ -119,7 +119,7 @@ const CheckOutForm = ({ bookingData }) => {
               })
               .catch((error) => console.error(error));
 
-            navigate("/dashboard");
+            navigate("/dashboard/myorders");
           }
         });
     }

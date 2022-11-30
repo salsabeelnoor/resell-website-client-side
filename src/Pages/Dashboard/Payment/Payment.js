@@ -1,7 +1,8 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigation } from "react-router-dom";
+import Loading from "../../../Components/Loading/Loading";
 import CheckOutForm from "./CheckOutForm";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
@@ -10,6 +11,12 @@ console.log(stripePromise);
 
 const Payment = () => {
   const bookingData = useLoaderData();
+  const navigation = useNavigation();
+
+  if (navigation.state === "loading") {
+    return <Loading></Loading>;
+  }
+
   console.log(bookingData);
   return (
     <div className="container mx-auto mt-16">
